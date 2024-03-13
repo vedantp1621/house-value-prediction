@@ -5,9 +5,10 @@ zillow_data = ["Metro_median_sale_price_uc_sfrcondo_week.csv", "Metro_zhvi_uc_sf
 
 # Setting up Fed Data
 dfs = [pd.read_csv(path, parse_dates=["DATE"], index_col = ["DATE"]) for path in fed_data]
-fed_data = pd.merge_asof(dfs[0],dfs[1], on="DATE")
-fed_data = pd.merge_asof(fed_data, dfs[2], on="DATE")
 
+fed_data = pd.merge_asof(dfs[0],dfs[1], on="DATE")
+
+fed_data = pd.merge_asof(fed_data, dfs[2], on="DATE")
 
 # Setting up Zillow Price Data
 dfs = [pd.read_csv(f) for f in zillow_data]
@@ -28,15 +29,13 @@ zillow_data.columns = ["Price", "Value"]
 
 zillow_data.ffill()
 
-print(zillow_data.tail(50))
-
-
 # Combine both
 
-# from datetime import timedelta
+fed_data = fed_data.dropna()
 
-# fed_data.index = fed_data.index + timedelta(days=2);
-# fed_data = fed_data.dropna(); 
+zillow_data.index = zillow_data.index + pd.DateOffset(days=5)
 
-
+#for some reason combining these is clearing the dataset
+total_data = pd.merge(zillow_data, fed_data, left_index=True, right_index=True)
+print(total_data)
 
