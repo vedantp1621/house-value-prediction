@@ -10,6 +10,8 @@ fed_data = pd.merge_asof(dfs[0],dfs[1], on="DATE")
 
 fed_data = pd.merge_asof(fed_data, dfs[2], on="DATE")
 
+print(dfs[1])
+
 # Setting up Zillow Price Data
 dfs = [pd.read_csv(f) for f in zillow_data]
 
@@ -34,8 +36,9 @@ zillow_data.ffill()
 fed_data = fed_data.dropna()
 
 zillow_data.index = zillow_data.index + pd.DateOffset(days=5)
-
+print(zillow_data)
+print(fed_data)
 #for some reason combining these is clearing the dataset
-total_data = pd.merge(zillow_data, fed_data, left_index=True, right_index=True)
-print(total_data)
+# zillow_data = fed_data.merge(zillow_data, left_index=True, right_index=True)
+# print(zillow_data)
 
