@@ -42,4 +42,16 @@ combined_data = fed_data.merge(zillow_data, left_index=True, right_index=True)
 
 combined_data.columns = ["interest", "vacancy", "cpi", "price", "value"]
 
-print(combined_data)
+combined_data['price'] = combined_data['price'].astype(float)
+combined_data['value'] = combined_data['value'].astype(float)
+combined_data = combined_data.astype(float)
+print(combined_data.dtypes)
+
+
+
+data_plot = combined_data.plot.line(y = "vacancy")
+
+data_plot.imshow(X = combined_data)
+
+
+
