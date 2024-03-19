@@ -43,11 +43,3 @@ combined_data = fed_data.merge(zillow_data, left_index=True, right_index=True)
 combined_data.columns = ["interest", "vacancy", "cpi", "price", "value"]
 
 print(combined_data)
-
-
-
-
-
-#for some reason combining these is clearing the dataset
-
-
