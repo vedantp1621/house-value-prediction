@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 fed_data = ["MORTGAGE30US.csv", "RRVRUSQ156N.csv", "CPIAUCSL.csv"]
 zillow_data = ["Metro_median_sale_price_uc_sfrcondo_week.csv", "Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_month.csv"]
@@ -45,13 +46,13 @@ combined_data.columns = ["interest", "vacancy", "cpi", "price", "value"]
 combined_data['price'] = combined_data['price'].astype(float)
 combined_data['value'] = combined_data['value'].astype(float)
 combined_data = combined_data.astype(float)
-print(combined_data.dtypes)
+# print(combined_data.dtypes)
 
+combined_data["adj_price"] = combined_data["price"] / combined_data["cpi"] * 100
 
+plt.plot(combined_data.index, combined_data['adj_price'])
+plt.show()
 
-data_plot = combined_data.plot.line(y = "vacancy")
-
-data_plot.imshow(X = combined_data)
 
 
 
