@@ -61,4 +61,18 @@ print(combined_data["change"].value_counts())
 
 predictors = ["interest", "vacancy", "adj_price", "adj_value"]
 target = "change"
- 
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import numpy
+
+#(training set, test set(prediction set), columns we use to make predictions, target)
+
+def predict(train, test, predictors, target):
+    rand_forest = RandomForestClassifier(min_samples_split=6, random_state=1) #initialize forest model
+    rand_forest.fit(train[predictors], train[target]) #train
+    predictions = rand_forest.predict(test[predictors]) #test
+    return predictions
+
+
+
