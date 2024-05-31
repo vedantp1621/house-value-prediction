@@ -47,32 +47,34 @@ combined_data = fed_data.merge(zillow_data, left_index=True, right_index=True)
 
 combined_data.columns = ["interest", "vacancy", "cpi", "price", "value"]
 
+print(combined_data)
+
 combined_data["adj_price"] = combined_data["price"] / combined_data["cpi"] * 100
 combined_data["adj_value"] = combined_data["value"] / combined_data["cpi"] * 100
 
-# plt.plot(combined_data.index, combined_data["adj_price"])
-# plt.show()
+plt.plot(combined_data.index, combined_data["adj_price"])
+plt.show()
 
-combined_data["next_quarter_price"] = combined_data["adj_price"].shift(-13)
-combined_data = combined_data.dropna()
+# combined_data["next_quarter_price"] = combined_data["adj_price"].shift(-13)
+# combined_data = combined_data.dropna()
 
-combined_data["change"] = (combined_data["next_quarter_price"] > combined_data["adj_price"]).astype(int)
-print(combined_data["change"].value_counts())
+# combined_data["change"] = (combined_data["next_quarter_price"] > combined_data["adj_price"]).astype(int)
+# print(combined_data["change"].value_counts())
 
-predictors = ["interest", "vacancy", "adj_price", "adj_value"]
-target = "change"
+# predictors = ["interest", "vacancy", "adj_price", "adj_value"]
+# target = "change"
 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-import numpy
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.metrics import accuracy_score
+# import numpy
 
 #(training set, test set(prediction set), columns we use to make predictions, target)
 
-def predict(train, test, predictors, target):
-    rand_forest = RandomForestClassifier(min_samples_split=6, random_state=1) #initialize forest model
-    rand_forest.fit(train[predictors], train[target]) #train
-    predictions = rand_forest.predict(test[predictors]) #test
-    return predictions
+# def predict(train, test, predictors, target):
+#     rand_forest = RandomForestClassifier(min_samples_split=6, random_state=1) #initialize forest model
+#     rand_forest.fit(train[predictors], train[target]) #train
+#     predictions = rand_forest.predict(test[predictors]) #test
+#     return predictions
 
 
 
